@@ -20,7 +20,7 @@ Open <http://127.0.0.1:5000>. The app creates `instance/campus_bites.db` and see
 With Google Cloud CLI installed, authenticated, and a project selected:
 
 ```bash
-gcloud run deploy campus-bites --source . --region us-central1 --allow-unauthenticated \
+gcloud run deploy campus-bites --source . --region us-central1 --min 1 --max 1 --allow-unauthenticated \
   --set-env-vars SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_hex(32))')"
 ```
 
