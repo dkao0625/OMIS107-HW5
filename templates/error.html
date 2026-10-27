@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}{{ code }} · Campus Bites{% endblock %}
+{% block content %}
+  <section class="error-page"><p class="eyebrow">OOPS, WRONG TABLE</p><span class="error-code">{{ code }}</span><h1>{{ message }}</h1><p class="muted">Let's get you back to something delicious.</p><a class="button button-dark" href="{{ url_for('index') }}">Back to all places <span aria-hidden="true">↗</span></a></section>
+{% endblock %}

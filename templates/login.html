@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Log in · Campus Bites{% endblock %}
+{% block content %}
+  <section class="auth-page">
+    <div class="auth-art"><span class="auth-emoji" aria-hidden="true">🍋</span><p>Good food tastes<br>better together.</p><span class="art-caption">your neighborhood table awaits</span></div>
+    <div class="auth-card">
+      <p class="eyebrow">WELCOME BACK</p><h1>Come on in<span class="heading-period">.</span></h1>
+      <p class="muted">Log in to write a review or pick up where you left off.</p>
+      <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ session['_csrf_token'] }}">
+        <label class="field-label" for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" minlength="3" maxlength="24" required>
+        <label class="field-label" for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button class="button button-green button-full" type="submit">Log in <span aria-hidden="true">↗</span></button>
+      </form>
+      <p class="auth-switch">First time here? <a href="{{ url_for('register') }}">Make an account</a></p>
+    </div>
+  </section>
+{% endblock %}

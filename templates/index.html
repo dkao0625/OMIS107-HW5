@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Find your next favorite · Campus Bites{% endblock %}
+{% block content %}
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-dot"></span> GOOD FOOD, CLOSE BY</p>
+      <h1>Find your next<br><em>favorite bite.</em></h1>
+      <p class="hero-intro">Honest ratings from people who eat around here. Find a new go-to between classes.</p>
+      <a class="button button-dark" href="#places">Explore the neighborhood <span aria-hidden="true">↓</span></a>
+      <div class="hero-note"><span class="avatar-stack"><i>m</i><i>l</i><i>a</i></span><span>Reviews from your campus community</span></div>
+    </div>
+    <div class="hero-art" aria-label="Illustration of a bowl of food">
+      <div class="art-sun"></div><div class="art-scribble">made<br>with care</div>
+      <div class="plate"><div class="food-bowl"><span class="leaf leaf-one"></span><span class="leaf leaf-two"></span><span class="tomato tomato-one"></span><span class="tomato tomato-two"></span><span class="grain grain-one"></span><span class="grain grain-two"></span><span class="grain grain-three"></span></div></div>
+      <span class="art-caption">a good day starts with a good meal</span>
+    </div>
+  </section>
+
+  <section class="places-section" id="places">
+    <div class="section-heading">
+      <div><p class="eyebrow">THE NEIGHBORHOOD MENU</p><h2>Places worth a try<span class="heading-period">.</span></h2></div>
+      <span class="section-count">{{ places|length }} <span>places to explore</span></span>
+    </div>
+    <form class="search-panel" action="{{ url_for('index') }}" method="get">
+      <label class="search-input"><span aria-hidden="true">⌕</span><input type="search" name="q" value="{{ search }}" placeholder="Try “tacos” or a neighborhood" aria-label="Search places"></label>
+      <label class="select-wrap"><span class="sr-only">Cuisine type</span>
+        <select name="category">
+          <option value="">All cuisines</option>
+          {% for item in categories %}
+            <option value="{{ item.category }}" {% if selected_category == item.category %}selected{% endif %}>{{ item.category }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <button class="button button-green" type="submit">Find a spot <span aria-hidden="true">↗</span></button>
+    </form>
+    {% if places %}
+      <div class="place-grid">
+        {% for place in places %}
+          <article class="place-card">
+            <a class="place-card-link" href="{{ url_for('place_detail', slug=place.slug) }}" aria-label="View {{ place.name }}">
+              <div class="place-art art-{{ loop.index0 % 6 }}">
+                <span class="place-art-tag">{{ place.category }}</span>
+                <span class="food-emoji" aria-hidden="true">{{ ['☕', '🍜', '🥗', '🍕', '🥞', '🌮'][loop.index0 % 6] }}</span>
+                <span class="place-art-number">0{{ loop.index }}</span>
+              </div>
+              <div class="place-info">
+                <div class="place-title-row"><h3>{{ place.name }}</h3><span class="place-price">{{ place.price }}</span></div>
+                <p class="place-meta">{{ place.category }} <span>·</span> {{ place.location }}</p>
+                <p class="place-description">{{ place.description }}</p>
+                <div class="place-rating">
+                  <span class="stars" aria-label="{{ '%.1f'|format(place.average_rating) }} out of 5 stars">★★★★★</span>
+                  <strong>{{ '%.1f'|format(place.average_rating) }}</strong>
+                  <span class="review-count">{{ place.review_count }} {% if place.review_count == 1 %}review{% else %}reviews{% endif %}</span>
+                  <span class="card-arrow" aria-hidden="true">↗</span>
+                </div>
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state"><span class="empty-icon">⌕</span><h3>No spots found just yet.</h3><p>Try a different search or clear the cuisine filter.</p><a href="{{ url_for('index') }}">See all places →</a></div>
+    {% endif %}
+  </section>
+{% endblock %}

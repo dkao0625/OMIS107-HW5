@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ profile_user.display_name }}’s reviews · Campus Bites{% endblock %}
+{% block content %}
+  <section class="profile-page">
+    <a class="back-link" href="{{ url_for('index') }}">← Explore places</a>
+    <div class="profile-heading"><span class="avatar avatar-large">{{ profile_user.display_name[0]|upper }}</span><div><p class="eyebrow">A TASTE OF THE NEIGHBORHOOD</p><h1>{{ profile_user.display_name }}’s reviews<span class="heading-period">.</span></h1><p class="muted">@{{ profile_user.username }} · {{ reviews|length }} reviews</p></div></div>
+    {% if reviews %}
+      <div class="profile-review-list">
+        {% for review in reviews %}
+          <a class="profile-review" href="{{ url_for('place_detail', slug=review.slug) }}">
+            <div><p class="eyebrow">{{ review.category }}</p><h2>{{ review.name }}</h2><span class="review-date">Reviewed {{ review.updated_at[:10] }}</span></div>
+            <div class="profile-review-score"><span class="review-stars">{{ '★' * review.rating }}<span class="empty-stars">{{ '★' * (5 - review.rating) }}</span></span><p>{{ review.body }}</p></div>
+            <span class="card-arrow" aria-hidden="true">↗</span>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state"><span class="empty-icon">✳</span><h3>No reviews yet.</h3><p>Good things are waiting to be tasted.</p><a href="{{ url_for('index') }}">Explore the places →</a></div>
+    {% endif %}
+  </section>
+{% endblock %}

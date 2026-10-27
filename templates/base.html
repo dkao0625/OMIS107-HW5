@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f5ef">
+    <title>{% block title %}Campus Bites{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">cb</span> campus bites</a>
+      <nav aria-label="Main navigation">
+        <a href="{{ url_for('index') }}">Explore</a>
+        {% if current_user %}
+          <a href="{{ url_for('profile', username=current_user.username) }}">My reviews</a>
+          <span class="nav-greeting">Hi, {{ current_user.display_name }}</span>
+          <form class="nav-form" action="{{ url_for('logout') }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ session['_csrf_token'] }}">
+            <button class="nav-link" type="submit">Log out</button>
+          </form>
+        {% else %}
+          <a href="{{ url_for('login') }}">Log in</a>
+          <a class="nav-signup" href="{{ url_for('register') }}">Join the table</a>
+        {% endif %}
+      </nav>
+    </header>
+    <main>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-stack" aria-live="polite">
+            {% for category, message in messages %}
+              <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+      <a class="brand brand-small" href="{{ url_for('index') }}"><span class="brand-mark">cb</span> campus bites</a>
+      <span>A little more flavor in your campus day.</span>
+      <span>Sample places and reviews are fictional.</span>
+    </footer>
+  </body>
+</html>

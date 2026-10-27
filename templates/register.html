@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Join Campus Bites{% endblock %}
+{% block content %}
+  <section class="auth-page">
+    <div class="auth-art"><span class="auth-emoji" aria-hidden="true">🍊</span><p>There’s always<br>room at the table.</p><span class="art-caption">find a bite worth sharing</span></div>
+    <div class="auth-card">
+      <p class="eyebrow">JOIN THE COMMUNITY</p><h1>Pull up a chair<span class="heading-period">.</span></h1>
+      <p class="muted">Create an account to rate your favorites and help others find theirs.</p>
+      <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ session['_csrf_token'] }}">
+        <label class="field-label" for="display_name">Name shown on reviews</label>
+        <input id="display_name" name="display_name" autocomplete="name" maxlength="40" required>
+        <label class="field-label" for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" aria-describedby="username-hint" required>
+        <span class="form-hint" id="username-hint">3–24 letters, numbers, or underscores</span>
+        <label class="field-label" for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required>
+        <span class="form-hint">At least 8 characters</span>
+        <button class="button button-green button-full" type="submit">Create account <span aria-hidden="true">↗</span></button>
+      </form>
+      <p class="auth-switch">Already a member? <a href="{{ url_for('login') }}">Log in</a></p>
+    </div>
+  </section>
+{% endblock %}
