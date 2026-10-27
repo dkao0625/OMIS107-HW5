@@ -4,13 +4,17 @@ Campus Bites is a small food-review site for discovering places to eat around ca
 
 Restaurant listings and sample reviews are fictional starter data. New accounts and reviews are stored in SQLite.
 
+## Live website
+
+<https://campus-bites-yvyem3jsea-uc.a.run.app>
+
 ## Run locally
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-flask --app app run --debug
+python3 app.py
 ```
 
 Open <http://127.0.0.1:5000>. The app creates `instance/campus_bites.db` and seeds the sample restaurants on first run. Set `DATABASE_PATH` to use a different SQLite file and `SECRET_KEY` to a long random value before deploying.
